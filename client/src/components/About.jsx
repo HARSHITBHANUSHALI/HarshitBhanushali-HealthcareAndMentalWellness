@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import l from '../assets/logo.png'
 
 const About = () => {
     const navigate = useNavigate();
@@ -14,11 +15,11 @@ const About = () => {
         
         {/* Image Section */}
         <div className="flex justify-center lg:w-1/2">
-          <div className="w-80 h-80 rounded-full overflow-hidden bg-yellow-500 flex items-center justify-center">
+          <div className=" rounded-full overflow-hidden flex items-center justify-center">
             <img
-              src="https://via.placeholder.com/300" // Replace with your image URL
+              src={l} // Replace with your image URL
               alt="About Us"
-              className="w-full h-full object-cover"
+              className="w-80 h-80 object-contain"
             />
           </div>
         </div>

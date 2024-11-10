@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { IoIosCloseCircle } from "react-icons/io";
 import axios from 'axios';
+import Cookies from 'js-cookie'; // Import js-cookie to access cookies
+
 
 const QuizPopup = () => {
   const [isQuizOpen, setIsQuizOpen] = useState(false); 
@@ -40,33 +42,29 @@ const QuizPopup = () => {
   }
 
   async function callDjango() {
-    const token = document.cookie.split('; ').find(row => row.startsWith('YOUR_TOKEN_NAME')).split('=')[1];
-    
-    const questionAnswerPairs = questions.map((question, index) => ({
-      question: question.question,
-      answer: question.options[selectedAnswers[index]],
-    }));
-
+    // Prepare each question-answer pair as JSON with the format { text: "question:answer" }
+    const questionAnswerPairs = questions.map((question, index) => {
+      return { text: `${question.question}: ${question.options[selectedAnswers[index]]}` };
+    });
+  
     try {
       const res = await axios.post(
-        'http://127.0.0.1:8000/api/mask_psych/',
-        { text: questionAnswerPairs },
-        {
-          headers: {
-            'Authorization': `Bearer ${token}`
-          }
-        }
+        'http://10.240.13.126:8000/api/mood_score/',
+        questionAnswerPairs // Send the array directly
       );
       if (res.data) {
-        setDb(res.data.results);
+        setDb(res.data.mood_score);
         callNode();
       }
     } catch (error) {
       console.error("Error calling Django backend", error);
     }
   }
+  
+  
+
   async function callNode(){
-    const res = await axios.post('http://localhost:8000/api/moodlogs' , {db});
+    const res = await axios.post('http://localhost:3500/api/moodlogs' , {db});
     if(res.daat){
       console.log(res.data);
     }
@@ -91,7 +89,7 @@ const QuizPopup = () => {
         localStorage.setItem('quizLastAttempt', today);
         setQuizTakenToday(true);
         alert('You have attempted Quiz for today');
-        callDjango(); // Call Django backend after submitting answers
+        await callDjango(); // Call Django backend after submitting answers
       }
     } catch (error) {
       console.error("Error submitting answers", error);

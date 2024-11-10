@@ -13,8 +13,6 @@ const mongoose = require('mongoose');
 const connectDB = require('./config/dbConn')
 const ROLES_LIST = require('./config/roles_list');
 const verifyRoles = require('./middleware/verifyRoles');
-const { Server } = require('socket.io');
-// const chatRoom = require('./webSockets/chatRoom')
 
 connectDB();
 
@@ -30,21 +28,23 @@ app.use(cookieParser());
 
 app.use('/',express.static(path.join(__dirname,'/public')));
 
-// app.use('/call',require('./routes/callRoute'));
-
-// app.use('/message',require('./routes/messageRoute'));
-
 app.use('/auth', require('./routes/authRoutes'));
 
 app.use(verifyJWT);
 
-const expressServer = app.listen(PORT,()=>console.log(`Server running on Port ${PORT}`));
+app.use('/api', require('./routes/userRoutes'));
 
-const io = new Server(expressServer, {
-    cors: {
-        credentials: true,
-        origin: corsOptions
-    }
-});
+app.use('/call',require('./routes/callRoutes'));
 
-// chatRoom(io);
+app.use('/message',require('./routes/messageRoutes'));
+
+app.use('/journals' , require('./routes/journalRoutes'));
+
+app.use('/' , require('./routes/event.routes'));
+
+app.use('/' , require('./routes/ticket.routes'))
+
+app.use('/report', require('./routes/reportRoutes'));
+
+
+app.listen(PORT,()=>console.log(`Server running on Port ${PORT}`));

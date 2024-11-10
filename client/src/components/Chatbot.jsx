@@ -23,17 +23,12 @@ function Chatbot() {
     setInput('');
 
     try {
-      const response = await axios.post('http://localhost:8000/api/chat/', { 
+      const response = await axios.post('http://10.240.13.126:8000/api/chat/', { 
         question: input,
         session_id: sessionId,
-      } ,
-      {
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}` 
-        }
-      }
+      } 
     );
-      const botResponse = response.data.answer;
+      const botResponse = response.data.response;
       setMessages([...newMessages, { role: 'assistant', content: botResponse }]);
 
     } catch (error) {

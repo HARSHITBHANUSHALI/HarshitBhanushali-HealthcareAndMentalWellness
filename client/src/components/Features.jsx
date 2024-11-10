@@ -88,7 +88,7 @@ const Features = () => {
           className={`transition-transform duration-300 ${showAlternatives ? 'bg-blue-600' : 'bg-gray-300'}`}
         />
         <Label htmlFor="show-alternatives" className="ml-3 text-lg font-medium text-gray-700">
-          {showAlternatives ? 'Without BeyondCare' : 'With BeyondCare'}
+          {showAlternatives ? 'Imagine with BeyondCare' : 'Without BeyondCare'}
         </Label>
       </div>
 

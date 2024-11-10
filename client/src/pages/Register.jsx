@@ -77,8 +77,8 @@ function Register() {
                     <input
                         type="radio"
                         name="role"
-                        value="Doctors"
-                        checked={role === 'Doctors'}
+                        value="Doctor"
+                        checked={role === 'Doctor'}
                         onChange={(e) => setRole(e.target.value)}
                         className="form-radio"
                     />

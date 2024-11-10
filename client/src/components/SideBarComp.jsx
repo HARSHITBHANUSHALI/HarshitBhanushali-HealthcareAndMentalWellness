@@ -23,12 +23,12 @@ function SideBarComp() {
                     <SidebarItem icon={<FaHome size={25} className="rounded-md p-1 text-[#cfc2cb] my-1" />} text="Home" to="/dashboard" active />
                     <SidebarItem icon={<LiaUserFriendsSolid size={20} className="rounded-md text-[#cfc2cb] my-1" />} text="EventExpress" to="/event" alert />
                     <SidebarItem icon={<IoDocumentText size={20} className="rounded-md text-[#cfc2cb] my-1" />} text="TherapyTime" to="/booking" />
-                    <SidebarItem icon={<FaFileVideo size={20} className="rounded-md text-[#cfc2cb] my-1" />} text="WellnessPlanning" to="/plan" />
+                    <SidebarItem icon={<FaFileVideo size={20} className="rounded-md text-[#cfc2cb] my-1" />} text="WellnessPlanning" to="/wellness" />
                     <hr className="my-3" />
                     <SidebarItem icon={<IoSettings size={20} />} text="Settings" to="/dashboard/settings" />
                     <SidebarItem icon={<IoMdHelp size={20} />} text="Help" to="/dashboard/help" />
                 </Sidebar>
-                <div className={`flex-grow transition-all duration-300 ${sidebarOpen ? 'ml-[210px]' : 'ml-[72px]'}`}>
+                <div className={`flex-grow transition-all duration-300 ${sidebarOpen ? 'ml-[260px]' : 'ml-[72px]'}`}>
                     <Header sidebarOpen={sidebarOpen} />
                 </div>
             </div>

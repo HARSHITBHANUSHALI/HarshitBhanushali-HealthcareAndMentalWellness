@@ -14,6 +14,7 @@ const registerUser = async (req, res) => {
     try {
       const roleValue = ROLES_LIST[role];  // Convert role string to numeric role
 
+      // Register Student and other approved roles directly
       if (roleValue) {
         const user = new User({
           name,
@@ -53,7 +54,7 @@ const loginUser = async (req, res) => {
                 role: user.role 
             } },
             process.env.ACCESS_TOKEN_SECRET,
-            { expiresIn: '1h' }
+            { expiresIn: '10h' }
         );
 
         // Set token as an HTTP-only cookie
@@ -62,10 +63,9 @@ const loginUser = async (req, res) => {
             // secure: process.env.NODE_ENV === 'production', // only use secure cookies in production
             secure: true,
             sameSite: 'None', // cross-site cookie
-            maxAge: 60 * 60 * 1000 // 1 hour
+            maxAge: 60 * 60 * 10000 // 1 hour
         });
-
-        res.status(200).json(user);
+        res.status(200).json({user,accessToken});
     } catch (err) {
         res.status(500).json({ message: err.message });
     }

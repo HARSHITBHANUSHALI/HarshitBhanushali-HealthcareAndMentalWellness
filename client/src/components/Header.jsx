@@ -7,19 +7,19 @@ import { IoToggleSharp } from "react-icons/io5";
 import { CgToggleOn } from "react-icons/cg";
 import { useContext, useEffect, useState } from "react";
 import { Link, Navigate, useLocation } from "react-router-dom";
-import { FaUserAlt } from "react-icons/fa";
 import { ThemeContext } from "../THemeContext";
-
+import { FaUserAlt } from "react-icons/fa";
+import { UserContext } from "../UserContext";
+import axios from "axios";
+import s from '../assets/streak.svg'
 
 function Header({ sidebarOpen }) {
-  const user = {
-    username: 'Anushka',
-    email: 'anushka@example.com',
-  }
+  const { user } = useContext(UserContext);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const { theme, toggleTheme } = useContext(ThemeContext);
   const [redirect, setRedirect] = useState(false);
   const [pic, setPic] = useState(null);
+
 
   const location = useLocation();
   const pathTitleMap = {
@@ -46,20 +46,20 @@ function Header({ sidebarOpen }) {
 
   return (
     <div
-      className={`shadow-md p-4 flex items-center justify-between border-b-4 fixed top-0 left-0 right-0 bg-white z-10 border-[#ebbcdd] transition-all duration-300 ${
-        sidebarOpen ? 'ml-[200px]' : 'ml-[72px]'
+      className={`shadow-md p-4 flex items-center justify-end border-b-4 fixed top-0 left-0 right-0 bg-white z-10 border-[#cfc2cb] transition-all duration-300 ${
+        sidebarOpen ? 'ml-[255px]' : 'ml-[72px]'
       } header-container`}
       style={{
         backgroundColor: theme === 'light' ? '' : 'black',
         color: theme === 'light' ? '' : 'white'
       }}
     >
-      <div className="flex items-center">
+      {/* <div className="flex items-center">
         <h1 className="text-xl md:text-2xl font-bold">{currentTitle}</h1>
-      </div>
+      </div> */}
       <div className="flex items-center">
         {/* Search Bar: Hidden on small screens */}
-        <div className="relative w-full max-w-xs rounded-full border border-[#cfc2cb] hidden sm:block">
+        <div className="relative w-full max-w-xs rounded-full border border-orange-600 hidden sm:block">
           <IoIosSearch size={24} className="absolute top-0 left-0 mt-2 ml-3 text-gray-400" />
           <input
             type="text"
@@ -67,10 +67,10 @@ function Header({ sidebarOpen }) {
             className="border rounded-full pl-10 pr-4 py-2 w-full"
           />
         </div>
+        <div>
+          <img src={s} alt="streak" className="h-4 w-4" />
+        </div>
         <div className="ml-4 flex items-center space-x-1 cursor-pointer relative">
-          {/* {pic ? (
-            <img src={`http://localhost:8000${pic}`} className="w-10 h-10 sm:w-14 sm:h-14 rounded-full" />
-          ) : ( */}
             <FaUserCircle size={32} className="text-gray-300 sm:text-40" />
           <button onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
             <RiArrowDropDownLine size={24} className="sm:text-30" />
@@ -83,7 +83,7 @@ function Header({ sidebarOpen }) {
                 <div className="mb-2 flex gap-2">
                   <FaUserAlt className="text-md mt-1" />
                   <Link to="/profile">{user && (
-                    <span className="text-sm sm:text-md font-semibold">{user.username}</span>
+                    <span className="text-sm sm:text-md font-semibold">{user.name}</span>
                   )}</Link>
                 </div>
               </li>
