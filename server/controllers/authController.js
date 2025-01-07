@@ -13,7 +13,7 @@ const registerUser = async (req, res) => {
   
     try {
       const roleValue = ROLES_LIST[role];  // Convert role string to numeric role
-
+      console.log(roleValue);
       // Register Student and other approved roles directly
       if (roleValue) {
         const user = new User({
@@ -22,6 +22,7 @@ const registerUser = async (req, res) => {
           password: await bcrypt.hash(password, 10),
           role: roleValue  // Set the numeric role directly
         });
+        // console.log(user);
         await user.save();
         return res.status(201).json({ message: 'Registration successful' });
       } else {
@@ -29,6 +30,7 @@ const registerUser = async (req, res) => {
         return res.status(400).json({ message: 'Invalid role' });
       }
     } catch (err) {
+      // console.log(err.message);
       return res.status(500).json({ message: err.message });
     }
   };  

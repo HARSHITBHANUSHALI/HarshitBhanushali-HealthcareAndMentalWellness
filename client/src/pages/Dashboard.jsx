@@ -19,9 +19,11 @@ function Dashboard() {
   const { theme } = useContext(ThemeContext);
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [greeting, setGreeting] = useState('');
-  const { user } = useContext(UserContext);
+  const { user, ready } = useContext(UserContext);
   const [thought, setThought] = useState('');
   const [plan , setPlan] = useState('');
+
+  // console.log("dashboard",user);
 
   const audio = new Audio(vid); // Create Audio instance with the audio file
 
@@ -67,6 +69,14 @@ function Dashboard() {
       alert('Emergency Call Initiated');
       audio.play(); // Play the siren sound when emergency is called
     }
+  }
+
+  if (!ready) {
+    return <div>Loading...</div>;
+  }
+
+  if (!user) {
+    return <div>User not found. Please log in again.</div>;
   }
 
   return (

@@ -23,8 +23,10 @@ function Login() {
     e.preventDefault();
     const res = await axios.post("http://localhost:3500/auth/login" , {email , password });
     if(res.data){
+      // console.log(res.data);
       const userData = res.data.user;
-      const token = res.data.token;
+      // console.log("login",userData);
+      const token = res.data.accessToken;
       localStorage.setItem('token', token);
       login(userData);
       navigate('/dashboard');

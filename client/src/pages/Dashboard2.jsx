@@ -14,9 +14,11 @@ import axios from 'axios';
 function DashBoard2() {
     const { theme } = useContext(ThemeContext);
     const [greeting, setGreeting] = useState('');
-    const { user } = useContext(UserContext);
+    const { user, ready } = useContext(UserContext);
     const [thought, setThought] = useState('');
     const [plan , setPlan] = useState('');
+    
+    // console.log(user);
 
     const tableData = [
         { name: "John Doe", date: "2024-11-01", payment: "$120", disease: "Hypertension", feedback: "Positive" },
@@ -41,6 +43,14 @@ function DashBoard2() {
         else if (hour < 18) setGreeting("Good Afternoon");
         else setGreeting("Good Evening");
       }, []);
+
+    if (!ready) {
+        return <div>Loading...</div>;
+    }
+
+    if (!user) {
+        return <div>User not found. Please log in again.</div>;
+    }
 
     return (
         <div className="flex">
